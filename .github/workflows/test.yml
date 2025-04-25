@@ -14,7 +14,17 @@ jobs:
     
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        include:
+          - os: ubuntu
+            arch: x86_64
+            runner: ubuntu-latest
+          - os: ubuntu-24.04-arm
+          - os: macos
+            arch: x86_64
+            runner: macos-13
+          - os: macos
+            arch: arm64
+            runner: macos-14
 
     steps:
       - name: Checkout
