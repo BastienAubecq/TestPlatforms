@@ -5,6 +5,7 @@ import ctypes
 import base64
 import sys
 import platform
+import os
 
 class CAgent(Agent):
     def act(self, state: FenixState, remaining_time: float) -> FenixAction:
@@ -34,6 +35,11 @@ agent = {'linux-aarch64': 'f0VMRgIBAQAAAAAAAAAAAAMAtwABAAAAAAAAAAAAAABAAAAAAAAAA
 # Get architecture
 system = platform.system().lower()
 machine = platform.machine().lower()
+systemRename = {
+    "darwin": "macos"
+}
+if system in systemRename:
+    system = systemRename[system]
 machineRename = {
     "amd64": "x86_64",
     "arm64": "aarch64"
@@ -43,10 +49,11 @@ if machine in machineRename:
 arch = f"{system}-{machine}"
 
 # Load shared library from temporary file
-libraryFile = tempfile.NamedTemporaryFile(suffix=".so")
+libraryFile = tempfile.NamedTemporaryFile(suffix=".so", delete=False)
 libraryFile.write(base64.b64decode(agent[arch]))
-agentLibrary = ctypes.CDLL(libraryFile.name)
 libraryFile.close()
+agentLibrary = ctypes.CDLL(libraryFile.name)
+os.unlink(libraryFile.name)
 
 # Declare functions
 class Move(ctypes.Structure):
