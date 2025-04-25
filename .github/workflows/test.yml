@@ -15,9 +15,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-latest
-          - os: ubuntu-24.04-arm
-          - os: macos-latest
           - os: windows-latest
           - os: windows-11-arm
 
