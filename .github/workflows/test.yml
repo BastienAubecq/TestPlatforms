@@ -15,20 +15,11 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu
-            arch: x86_64
-            runner: ubuntu-latest
+          - os: ubuntu-latest
           - os: ubuntu-24.04-arm
-          - os: macos
-            arch: x86_64
-            runner: macos-13
-          - os: macos
-            arch: arm64
-            runner: macos-14
-          #- os: windows
-          #  arch: x86_64
-          #  runner: windows-latest
-          #- os: windows-11-arm
+          - os: macos-latest
+          - os: windows-latest
+          - os: windows-11-arm
 
     steps:
       - name: Checkout
