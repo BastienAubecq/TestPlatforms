@@ -49,11 +49,10 @@ if machine in machineRename:
 arch = f"{system}-{machine}"
 
 # Load shared library from temporary file
-libraryFile = tempfile.NamedTemporaryFile(suffix=".so", delete=False)
-libraryFile.write(base64.b64decode(agent[arch]))
-libraryFile.close()
-agentLibrary = ctypes.CDLL(libraryFile.name)
-os.unlink(libraryFile.name)
+fd, path = tempfile.mkstemp(suffix='.so')
+with os.fdopen(fd, 'wb') as f:
+    f.write(base64.b64decode(agent[arch]))
+agentLibrary = ctypes.CDLL(path)
 
 # Declare functions
 class Move(ctypes.Structure):
