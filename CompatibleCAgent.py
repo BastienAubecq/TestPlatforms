@@ -25,7 +25,7 @@ class CAgent(Agent):
         return FenixAction(
             (int.from_bytes(move.startI, sys.byteorder), int.from_bytes(move.startJ, sys.byteorder)), 
             (int.from_bytes(move.endI, sys.byteorder), int.from_bytes(move.endJ, sys.byteorder)), 
-            frozenset((int.from_bytes(captures[2*i]), int.from_bytes(captures[2*i+1])) for i in range(move.nCaptures))
+            frozenset((int.from_bytes(captures[2*i], sys.byteorder), int.from_bytes(captures[2*i+1], sys.byteorder)) for i in range(move.nCaptures))
         )
       
 # Link with C library
