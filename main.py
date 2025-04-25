@@ -1,8 +1,8 @@
 from game_manager import TextGameManager
-from AlphaBetaAgent import AlphaBetaAgent
+from random_agent import RandomAgent
 import CompatibleCAgent
 
-a = AlphaBetaAgent(-1)
+a = RandomAgent(-1)
 b = CompatibleCAgent.CAgent(1)
 game_manager = TextGameManager(b, a, 10)
 
