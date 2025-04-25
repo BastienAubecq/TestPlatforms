@@ -3,6 +3,7 @@ from fenix import FenixState, FenixAction
 import tempfile
 import ctypes
 import base64
+import sys
 import sysconfig
 
 class CAgent(Agent):
@@ -22,8 +23,8 @@ class CAgent(Agent):
         captures = ctypes.create_string_buffer(42)
         move = agentLibrary.act(stateBytes, remaining_time, captures)
         return FenixAction(
-            (int.from_bytes(move.startI), int.from_bytes(move.startJ)), 
-            (int.from_bytes(move.endI), int.from_bytes(move.endJ)), 
+            (int.from_bytes(move.startI, sys.byteorder), int.from_bytes(move.startJ, sys.byteorder)), 
+            (int.from_bytes(move.endI, sys.byteorder), int.from_bytes(move.endJ, sys.byteorder)), 
             frozenset((int.from_bytes(captures[2*i]), int.from_bytes(captures[2*i+1])) for i in range(move.nCaptures))
         )
       
